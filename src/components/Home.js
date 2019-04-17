@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import '../App.css';
-import './SetName.css';
+import './Home.css';
 
 function ChooseNames(props) {
     const [first, updateFirst] = useState("Player1");
@@ -20,6 +20,7 @@ function ChooseNames(props) {
                 <h2>Choose a players name</h2>
                 <form>
                     <input maxLength={11}
+                        type="text"
                         className='style-input'
                         placeholder=' Write players name..'
                         value={first}
@@ -28,9 +29,9 @@ function ChooseNames(props) {
                             updateFirst(e.target.value);
                             props.onChangeOne(e);
                         }}
-                        type="text" />
-                    <br></br>
+                    /><br></br>
                     <input maxLength={11}
+                        type="text"
                         className='style-input'
                         placeholder=' Write players name..'
                         value={second}
@@ -39,7 +40,7 @@ function ChooseNames(props) {
                             updateSecond(e.target.value);
                             props.onChangeTwo(e);
                         }}
-                        type="text" /><br />
+                    /><br />
 
                     <button className='start'
                         type='submit'

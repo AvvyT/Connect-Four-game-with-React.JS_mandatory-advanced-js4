@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ChooseNames from './components/SetName';
+import ChooseNames from './components/Home';
 import Board from './components/ConnectFour';
 import './App.css';
 
