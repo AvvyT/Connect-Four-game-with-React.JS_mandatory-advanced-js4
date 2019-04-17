@@ -10,7 +10,7 @@ function ChooseNames(props) {
     const focus = (e) => e.target.select();
 
     return (
-        <>
+        <div className='App'>
             <Helmet>
                 <title>Home page</title>
             </Helmet>
@@ -48,7 +48,7 @@ function ChooseNames(props) {
                     >Play</button>
                 </form>
             </div>
-        </>
+        </div>
     );
 }
 export default ChooseNames;

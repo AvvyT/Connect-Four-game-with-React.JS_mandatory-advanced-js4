@@ -5,11 +5,11 @@
     height: 30px;
     border-radius: 7px;
     font-weight: bold;
-    background: rgba(79, 78, 148, 0.698);
+    background: rgba(12, 13, 15, 0.445);
     border: none;
     outline: none;
     font-size: 20px;
-    border: 2px solid rgba(83, 137, 224, 0.719);
+    border: 2px solid rgba(158, 224, 83, 0.719);
 }
 
 .style-input {

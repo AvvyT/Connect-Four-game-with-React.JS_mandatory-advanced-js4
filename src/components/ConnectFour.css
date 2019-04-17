@@ -5,8 +5,9 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin-left: 29%;
-    border: 4px solid;
+    border: 12px solid gray;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .cell {
@@ -19,6 +20,22 @@
 .clear {
     position: absolute;
     left: 50%;
-    top: 9%;
+    bottom: 59%;
+    transform: translateY(-50%);
     transform: translateX(-50%);
+    color: white;
+    margin: 12px;
+    width: 110px;
+    height: 30px;
+    border-radius: 7px;
+    font-weight: bold;
+    background: rgba(12, 13, 15, 0.445);
+    border: none;
+    outline: none;
+    font-size: 20px;
+    border: 2px solid rgba(158, 224, 83, 0.719);
+}
+
+.style-header{
+    margin-bottom: 28px;
 }

@@ -50,22 +50,23 @@ function Board(props) {
     const [state, dispatch] = useReducer(reducer, cells);
 
     return (
-        <>
+        <div className='App'>
             <Helmet>
                 <title>Game page</title>
             </Helmet>
-            <h1>Connect Four</h1>
+            <header className='style-header'>
+                <h1>Connect Four</h1>
 
-            <h2>{props.first}</h2>
-            <h2>{props.second}</h2>
-
-            <p>the Board side....</p>
+                <h2>{props.first} & {props.second}</h2>
+                <p>the Board side....</p>
+            </header>
             <Grid cells={state} onClickCell={(idx) => {
                 console.log(idx);
                 dispatch(action(idx));
             }} />
+
             <button className='clear' onClick={() => dispatch(reset())}>Reset</button>
-        </>
+        </div>
     );
 }
 export default Board;
