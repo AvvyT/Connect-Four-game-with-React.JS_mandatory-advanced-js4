@@ -1,6 +1,6 @@
 .grid {
     width: 406px;
-    height:348px;
+    height: 348px;
     background-color: gray;
     display: flex;
     flex-direction: row;
@@ -36,6 +36,10 @@
     border: 2px solid rgba(158, 224, 83, 0.719);
 }
 
-.style-header{
+.style-header {
     margin-bottom: 28px;
+}
+
+span {
+    color: chartreuse;
 }

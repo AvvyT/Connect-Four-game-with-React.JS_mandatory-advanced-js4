@@ -18,7 +18,7 @@ function ChooseNames(props) {
 
             <div>
                 <h2>Choose a players name</h2>
-                <form>
+                <main>
                     <input maxLength={11}
                         type="text"
                         className='style-input'
@@ -46,7 +46,7 @@ function ChooseNames(props) {
                         type='submit'
                         onClick={props.login}
                     >Play</button>
-                </form>
+                </main>
             </div>
         </div>
     );
