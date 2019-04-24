@@ -5,9 +5,24 @@ import './ConnectFour.css';
 const allCells = 42;
 const cells = new Array(allCells).fill('white');
 
-function dropDisc(grid, column, color) {
+function dropDisc(grid, clickedCell, color) {
 
-    return null;
+    const column = clickedCell % 7;
+    console.log(column);
+
+    let fillCell = 35 + column;
+    // console.log(fillCell);
+
+    while (grid[fillCell] !== 'white' && fillCell > 0) {
+        fillCell -= 7;
+        if (fillCell < 7 && grid[fillCell] !== 'white') {
+            // om columnen är full- false
+            return [false, grid];
+        }
+    }
+    grid[fillCell] = color;
+
+    return [true, grid];
 }
 
 function calculateWinner(grid) {
@@ -19,16 +34,15 @@ function reducer(state, action) {
     switch (action.type) {
         case 'fill_cell':
             const newCells = [...state.cells];
-            newCells[action.id] = state.color;
-            const column = action.id % 7;
-            console.log(column);
+            const [gridChanged, columnCells] = dropDisc(newCells, action.id, state.color);
+            // console.log(gridChanged);
 
-            //const newCells = dropDisc(state.cells, column, state.color);
+            const newColor = state.color === "chartreuse" ? "pink" : "chartreuse";
 
             return {
                 ...state,
-                cells: newCells,
-                color: state.color === "chartreuse" ? "pink" : "chartreuse",
+                cells: columnCells,
+                color: gridChanged ? newColor : state.color,
             }
 
         case 'clear_game':
@@ -47,9 +61,7 @@ function action(id) {
 }
 
 function reset() {
-    return {
-        type: "clear_game"
-    };
+    return { type: "clear_game" };
 }
 
 function Grid(props) {
