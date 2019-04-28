@@ -18,11 +18,7 @@
 }
 
 .clear {
-    position: absolute;
-    left: 50%;
-    bottom: 59%;
-    transform: translateY(-50%);
-    transform: translateX(-50%);
+    text-align: center;
     color: white;
     margin: 12px;
     width: 110px;
@@ -42,4 +38,21 @@
 
 span {
     color: chartreuse;
+}
+
+.winner {
+    margin-bottom: 20px;
+    border-radius: 7px;
+    border: 2px solid rgba(158, 224, 83, 0.719);
+    padding: 3px;
+    box-sizing: border-box;
+    width: 450px;
+    background-color: azure;
+    color: red;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.player {
+    margin: auto;
 }
