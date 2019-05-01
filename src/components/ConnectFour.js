@@ -6,19 +6,15 @@ const allCells = 42;
 const cells = new Array(allCells).fill('white');
 //let count = 0;
 
-function dropDisc(grid, clickedCell, color) {
 
+function dropDisc(grid, clickedCell, color) {
     const column = clickedCell % 7;
-    // console.log(column);
     let fillCell = 35 + column;
-    // console.log(fillCell);
+    // console.log(column, fillCell);
 
     while (grid[fillCell] !== 'white' && fillCell > 0) {
         fillCell -= 7;
-        if (fillCell < 7 && grid[fillCell] !== 'white') {
-            // om columnen är full- false
-            return [false, grid];
-        }
+        if (fillCell < 7 && grid[fillCell] !== 'white') return [false, grid];
     }
     grid[fillCell] = color;
 
@@ -26,28 +22,61 @@ function dropDisc(grid, clickedCell, color) {
 }
 
 
-function calculateWinner(grid, interval) {
-    console.log(grid);
+function checkRestrictions(a, b, c, d, checkHorizontal, checkVertical) {
+    console.log('cell-num ' + a, b, c, d);
+
+    if (checkHorizontal) {
+        let colA = a % 7;
+        let colB = b % 7;
+        let colC = c % 7;
+        let colD = d % 7;
+        console.log('column-num ' + colA, colB, colC, colD);
+
+        if (colD - colC !== 1 || colC - colB !== 1 || colB - colA !== 1) return false;
+    }
+    if (checkVertical) {
+        let rowA = Math.floor(a / 6);
+        let rowB = Math.floor(b / 6);
+        let rowC = Math.floor(c / 6);
+        let rowD = Math.floor(d / 6);
+        console.log('rad-num ' + rowA, rowB, rowC, rowD);
+
+        if (rowA - rowB !== 1 || rowB - rowC !== 1 || rowC - rowD !== 1) return false;
+    }
+    return true;
+}
+
+
+function calculateWinner(grid, interval, checkHorizontal, checkVertical) {
+    // console.log(grid);
 
     for (let cell = 0; cell < grid.length; cell++) {
         let streak = 0;
         let player = null;
 
         if (grid[cell] !== 'white') {
-            player = grid[cell];
+            let cellPos1 = cell;
+            let cellPos2 = cell + interval;
+            let cellPos3 = cell + (interval * 2);
+            let cellPos4 = cell + (interval * 3);
+            player = grid[cellPos1];
             //console.log(player);
 
             streak = 1;
-            console.log('test ' + player + grid[cell + interval]);
+            // console.log('test ' + player + grid[cell]);
 
-            if (grid[cell + interval] === player) streak++; else continue;
-            if (grid[cell + (interval * 2)] === player) streak++; else continue;
-            if (grid[cell + (interval * 3)] === player) streak++; else continue;
+            if (grid[cellPos2] === player) streak++; else continue;
+            if (grid[cellPos3] === player) streak++; else continue;
+            if (grid[cellPos4] === player) streak++; else continue;
+
+            let check =
+                checkRestrictions(cellPos1, cellPos2, cellPos3, cellPos4, checkHorizontal, checkVertical);
+            console.log('hitat 4 i rad ' + check);
+            if (!check) continue;
         } else { continue; }
 
         if (streak === 4) {
             console.log('!!The winner are ' + player);
-
             return player;
         }
     }
@@ -57,14 +86,19 @@ function calculateWinner(grid, interval) {
 
 function checkForWinner(grid) {
 
-    const directions = [1, 7, 8, -6];
+    const directions = [
+        { dir: 1, checkHorizontal: true, checkVertical: false },
+        { dir: 7, checkHorizontal: false, checkVertical: true },
+        { dir: 8, checkHorizontal: true, checkVertical: true },
+        { dir: -6, checkHorizontal: true, checkVertical: true },
+    ];
+
     for (let i = 0; i < directions.length; i++) {
-        let winner = calculateWinner(grid, directions[i]);
+        let winner =
+            calculateWinner(grid, directions[i].dir, directions[i].checkHorizontal, directions[i].checkVertical);
         console.log(winner);
 
-        if (winner) {
-            return winner;
-        }
+        if (winner) return winner;
     }
     return false;
 }
@@ -125,10 +159,12 @@ function Grid(props) {
                     <div className='cell' key={idx} style={{
                         backgroundColor: cell,
                         border: '2px solid green',
-                        background: color, cursor: "pointer"
+                        background: color, cursor: "pointer",
+                        color: "purple"
                     }}
                         onClick={() => { props.onClickCell(idx); }}
-                    />))}
+                    >{idx}
+                    </div>))}
             </div>
         </>
     );
@@ -147,7 +183,7 @@ function Board(props) {
 
     const [state, dispatch] = useReducer(reducer,
         { color: 'chartreuse', cells, winner: false, });
-    console.log(state)
+    //console.log(state)
 
     return (
         <div className='App'>
