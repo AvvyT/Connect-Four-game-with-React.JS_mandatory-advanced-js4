@@ -35,13 +35,16 @@ function checkRestrictions(a, b, c, d, checkHorizontal, checkVertical) {
         if (colD - colC !== 1 || colC - colB !== 1 || colB - colA !== 1) return false;
     }
     if (checkVertical) {
-        let rowA = Math.floor(a / 6);
-        let rowB = Math.floor(b / 6);
-        let rowC = Math.floor(c / 6);
-        let rowD = Math.floor(d / 6);
-        console.log('rad-num ' + rowA, rowB, rowC, rowD);
+        // The Math.floor() function returns the largest integer less than or equal to a given number.
+        // ((41 - a) / 7) => ex: 41 - a(40) = 1, 1/7=0,14 sen math-metod => 0
+        let rowA = Math.floor((41 - a) / 7);
+        let rowB = Math.floor((41 - b) / 7);
+        let rowC = Math.floor((41 - c) / 7);
+        let rowD = Math.floor((41 - d) / 7);
+        console.log('rad-num ' + rowD, rowC, rowB, rowA);
 
-        if (rowA - rowB !== 1 || rowB - rowC !== 1 || rowC - rowD !== 1) return false;
+        if ((rowA - rowB !== 1 || rowB - rowC !== 1 || rowC - rowD !== 1) &&
+            (rowD - rowC !== 1 || rowC - rowB !== 1 || rowB - rowA !== 1)) return false;
     }
     return true;
 }
@@ -117,13 +120,12 @@ function reducer(state, action) {
             const [gridChanged, columnCells] = dropDisc(newCells, action.id, state.color);
             // console.log(gridChanged);
             const newColor = state.color === "chartreuse" ? "pink" : "chartreuse";
-            const winner = checkForWinner(newCells);
 
             return {
                 ...state,
                 cells: columnCells,
                 color: gridChanged ? newColor : state.color,
-                winner: winner,
+                winner: checkForWinner(newCells)
             }
 
         case 'clear_game':
@@ -162,8 +164,7 @@ function Grid(props) {
                         background: color, cursor: "pointer",
                         color: "purple"
                     }}
-                        onClick={() => { props.onClickCell(idx); }}
-                    >{idx}
+                        onClick={() => { props.onClickCell(idx); }} >
                     </div>))}
             </div>
         </>
